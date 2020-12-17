@@ -62,9 +62,9 @@ const movies = [
 ]
 function App() {
   
-  const [selected, setSelected] = useState(movies[0]);
+  const [selected, setSelected] = useState([]);
   const [currentMovies, setCurrentMovies] = useState(movies);
-  const [movie, setMovie] = useState({
+  const [inputValue, setInputValue] = useState({
     id: '',
     name: '',
     category: '',
@@ -83,7 +83,7 @@ function App() {
     setCurrentMovies(remainingMovies);
   }
 
-  console.log(movie);
+  console.log(inputValue);
   const clicked = () => {
     
   }
@@ -91,17 +91,25 @@ function App() {
   const addMovie = (event) => {
     event.preventDefault();
     const newMovie = {
-    id: Math.random() * 100,
-    name: movie.name,
-    category: movie.category,
-    description: movie.description,
-    rating: movie.rating,
-    img: '6.jpeg',
-    date: movie.date,
+      id: Math.random() * 100,
+      name: inputValue.name,
+      category: inputValue.category,
+      description: inputValue.description,
+      rating: inputValue.rating,
+      img: '6.jpeg',
+      date: inputValue.date
     }
     setCurrentMovies([...currentMovies, newMovie])
+    setInputValue({
+    id: '',
+    name: '',
+    category: '',
+    description: '',
+    rating: '',
+    img: '',
+    date:''
+})
   }
-
   return (
     <Container maxW='6xl' py={20}>
       <form >
@@ -144,21 +152,21 @@ function App() {
           <Grid templateColumns='repeat(3, 1fr)' gap={4}>
             <FormControl>
               <FormLabel>Title</FormLabel>
-              <Input bg='white' rounded='0px' name='name' value={movie.name} onChange={(event)=>setMovie({...movie, name: event.target.value})} />
+              <Input bg='white' rounded='0px' name='name' value={selected.name || inputValue.name} onChange={(event)=>setInputValue({...inputValue, name: event.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel>Rating</FormLabel>
-              <Input bg='white' rounded='0px' type='number' name='rating' value={movie.rating} onChange={(event)=>setMovie( {...movie, rating: event.target.value})} />
+              <Input bg='white' rounded='0px' type='number' name='rating' value={selected.rating || inputValue.rating} onChange={(event)=>setInputValue( {...inputValue, rating: event.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel>Release Date</FormLabel>
-              <Input bg='white' rounded='0px' type='date' name='date' value={movie.date} onChange={(event)=>setMovie({...movie, date: event.target.value})} />
+              <Input bg='white' rounded='0px' type='date' name='date' value={selected.date || inputValue.date} onChange={(event)=>setInputValue({...inputValue, date: event.target.value})} />
             </FormControl>
           </Grid>
           <Box my={4}>
             <FormControl>
               <FormLabel>Description</FormLabel>
-              <Textarea bg='white' rounded='0px' name='description' value={movie.description} onChange={(event)=>setMovie({...movie, description: event.target.value})}/>
+              <Textarea bg='white' rounded='0px' name='description' value={selected.description || inputValue.description} onChange={(event)=>setInputValue({...inputValue, description: event.target.value})}/>
             </FormControl>
           </Box>
           <Box>
